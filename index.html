@@ -1,11 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    fdcfvgzsahxvshaxvhasxvsxvxvsva
+    <div>
+        <h1 style="text-align: center;">CRUD DEBER</h1>
+    </div>
+    <div>
+        <form  id="form_ingresarCont">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Codigo del Contenedor</label>
+                <input type="text" class="form-control" id="cod_contenedor" placeholder="Codigo contenedor: #cont-001">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">MARCA:</label>
+                <select class="form-control" id="marca_contenedor">
+                
+                <option>TRITON</option>
+                <option>MAERSK</option>
+                <option>UASC</option>
+                <option>P&O</option>
+                <option>HAMBURG</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Aduanero Responsable:</label>
+                <input type="text" class="form-control" id="resp_contenedor" placeholder="Nombre y Apellido">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Compania/Enviado por:</label>
+                <input type="text" class="form-control" id="comEmi_contenedor" placeholder="Compania Emitente">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Ciudad procedente:</label>
+                <input type="text" class="form-control" id="cdiEmi_contenedor" placeholder="Ciudad Procedente">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Compania/Recibido por:</label>
+                <input type="text" class="form-control" id="comRecp_contenedor" placeholder="Compania Receptora">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Ciudad destino:</label>
+                <input type="text" class="form-control" id="cdiRecp_contenedor" placeholder="Ciudad Destino">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Contenido:</label>
+                <input type="text" class="form-control" id="contenido_contenedor" placeholder="Contenidpo: Cajas/Autos/etc">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Descripcion:</label>
+                <textarea class="form-control" id="descripcion_contenedor" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Estado del contenedor:</label>
+                <select class="form-control" id="estado_cont">
+                <option>EN REVISION</option>
+                <option>ENTREGADO</option>
+                <option>RETENIDO</option>
+                <option>CANCELADO</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success" >Guardar</button>
+            <button type="button" class="btn btn-danger">Eliminar</button>
+            <button type="button" class="btn btn-warning">Modificar</button>
+        </form>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {getFirestore,collection,addDoc,onSnapshot,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDpx3Bh3TmHCnT2HbiLMcYjiY8HbNh9nTc",
+          authDomain: "contenedores-ee7fc.firebaseapp.com",
+          projectId: "contenedores-ee7fc",
+          storageBucket: "contenedores-ee7fc.appspot.com",
+          messagingSenderId: "325024016184",
+          appId: "1:325024016184:web:45922216c395b7848143cd"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const Gcontenedor = document.getElementById("form_ingresarCont");
+        Gcontenedor.addEventListener("submit",async(e)=>{
+            e.preventDefault();
+            await addDoc(collection(db,"contenedor"),{
+                codigo: Gcontenedor.cod_contenedor.value,
+                marca: Gcontenedor.marca_contenedor.value,
+                aduanero: Gcontenedor.resp_contenedor.value,
+                com_emitente: Gcontenedor.comEmi_contenedor.value,
+                city_emitente: Gcontenedor.cdiEmi_contenedor.value,
+                com_recep: Gcontenedor.comRecp_contenedor.value,
+                ciudad_recep: Gcontenedor.cdiRecp_contenedor.value,
+                contenido: Gcontenedor.contenido_contenedor.value,
+                descripcion: Gcontenedor.descripcion_contenedor.value,
+                estado: Gcontenedor.estado_cont.value
+            });
+            Gcontenedor.reset();
+        });
+    </script>
 </body>
 </html>
